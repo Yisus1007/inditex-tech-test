@@ -1,7 +1,8 @@
-package com.inditex.hiring.infraestructure.repository;
+package com.inditex.hiring.infraestructure.entity;
 
 
 
+import com.inditex.hiring.domain.dto.OfferDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -61,5 +62,4 @@ public class Offer {
 
 	@Column(name = "quality")
 	private String quality;
-	
 }

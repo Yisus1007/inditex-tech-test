@@ -1,5 +1,6 @@
 package com.inditex.hiring.infraestructure.repository;
 
+import com.inditex.hiring.infraestructure.entity.Offer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class OfferRepositoryTest {
     @Autowired
     private OfferRepository offerRepository;
 
-    @Test
+   @Test
     public void checkBrandIdInsertedInInitialData (){
         Optional<Offer> offer = offerRepository.findByOfferId(1L);
         assertTrue("should be present", offer.isPresent());
