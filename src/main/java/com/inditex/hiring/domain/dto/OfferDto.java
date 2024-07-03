@@ -1,15 +1,19 @@
-package com.inditex.hiring.application.dto;
+package com.inditex.hiring.domain.dto;
 
+import com.inditex.hiring.infraestructure.entity.Offer;
+import lombok.Builder;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * Use this POJO for offer service end point responses.
  */
+
+
+@Builder
 public class OfferDto implements Serializable {
 
 	private static final long serialVersionUID = 448171649369562796L;
@@ -21,7 +25,6 @@ public class OfferDto implements Serializable {
 	private Integer brandId;
 
 	@NotEmpty(message = "No empty value startDate")
-	
 	private String startDate;
 
 	@NotEmpty(message = "No empty value endDate")	
@@ -58,6 +61,19 @@ public class OfferDto implements Serializable {
 		this.priority = priority;
 		this.price = price;
 		this.currencyIso = currencyIso;
+	}
+
+	public OfferDto(Offer offer) {
+		super();
+		this.offerId =offer.getOfferId();
+		this.brandId = offer.getBrandId();
+		this.startDate = offer.getStartDate().toString();
+		this.endDate = offer.getEndDate().toString();
+		this.priceListId = offer.getPriceListId().longValue();
+		this.productPartnumber = offer.getProductPartnumber();
+		this.priority = offer.getPriority();
+		this.price = offer.getPrice();
+		this.currencyIso = offer.getCurrencyIso();
 	}
 
 	public Long getOfferId() {
