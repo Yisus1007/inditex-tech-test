@@ -21,12 +21,12 @@ public class RetrieveOfferImpl implements RetrieveOffer {
     }
 
     @Override
-    public List<OfferDto> getAllOffers() {
-        return offerRepositoryPort.findAll();
+    public Optional<List<OfferDto>> getAllOffers() {
+        return Optional.of(offerRepositoryPort.findAll());
     }
 
     @Override
-    public List<OfferDto> getNonExpireOffers() {
-        return null;
+    public Optional<List<OfferDto>> getNonExpireOffers(String date) {
+        return Optional.of(offerRepositoryPort.findNonExpiredOffers(date));
     }
 }

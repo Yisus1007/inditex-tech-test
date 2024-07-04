@@ -1,5 +1,6 @@
 package com.inditex.hiring.application.service;
 
+import com.inditex.hiring.application.rest.exception.NoSuchResourceFoundException;
 import com.inditex.hiring.domain.dto.OfferDto;
 import com.inditex.hiring.domain.ports.CreateOffer;
 import com.inditex.hiring.domain.ports.DeleteOffer;
@@ -24,18 +25,19 @@ public class OfferService implements CreateOffer, RetrieveOffer, DeleteOffer {
     }
 
     @Override
-    public OfferDto createOffer(OfferDto offerDto) throws ParseException {
-        return createOffer.createOffer(offerDto);
+    public Optional<OfferDto> createOffer(OfferDto offerDto) throws ParseException {
+        return Optional.ofNullable(createOffer.createOffer(offerDto)
+                .orElseThrow(() -> new NoSuchResourceFoundException("error")));
     }
 
     @Override
-    public boolean deleteOffer(Integer id) {
+    public Optional<Boolean> deleteOffer(Integer id) {
         return deleteOffer.deleteOffer(id);
     }
 
     @Override
     public void deleteAllOffers() {
-
+        deleteOffer.deleteAllOffers();
     }
 
     @Override
@@ -44,12 +46,12 @@ public class OfferService implements CreateOffer, RetrieveOffer, DeleteOffer {
     }
 
     @Override
-    public List<OfferDto> getAllOffers() {
+    public Optional<List<OfferDto>> getAllOffers() {
         return retrieveOffer.getAllOffers();
     }
 
     @Override
-    public List<OfferDto> getNonExpireOffers() {
-        return retrieveOffer.getNonExpireOffers();
+    public Optional<List<OfferDto>> getNonExpireOffers(String date) {
+        return retrieveOffer.getNonExpireOffers(date);
     }
 }

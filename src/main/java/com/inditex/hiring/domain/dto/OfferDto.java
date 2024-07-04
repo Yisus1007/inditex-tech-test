@@ -65,7 +65,7 @@ public class OfferDto implements Serializable {
 
 	public OfferDto(Offer offer) {
 		super();
-		this.offerId =offer.getOfferId();
+		this.offerId =offer.getOfferId().longValue();
 		this.brandId = offer.getBrandId();
 		this.startDate = offer.getStartDate().toString();
 		this.endDate = offer.getEndDate().toString();
