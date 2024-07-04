@@ -5,7 +5,6 @@ import com.inditex.hiring.domain.dto.OfferDto;
 import com.inditex.hiring.domain.ports.CreateOffer;
 import com.inditex.hiring.domain.ports.DeleteOffer;
 import com.inditex.hiring.domain.ports.RetrieveOffer;
-import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.List;
@@ -52,6 +51,6 @@ public class OfferService implements CreateOffer, RetrieveOffer, DeleteOffer {
 
     @Override
     public Optional<List<OfferDto>> getNonExpireOffers(String date) {
-        return retrieveOffer.getNonExpireOffers(date);
+        return Optional.ofNullable(retrieveOffer.getNonExpireOffers(date).orElseThrow(() -> new NoSuchResourceFoundException("Error with in date")));
     }
 }

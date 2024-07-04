@@ -3,11 +3,7 @@ package com.inditex.hiring.infraestructure.entity;
 
 
 import com.inditex.hiring.domain.dto.OfferDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
-import lombok.Setter;
-import lombok.Getter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -22,33 +18,34 @@ import javax.persistence.Table;
 @Builder
 @Setter
 @Getter
+@ToString
 @Entity
 @Table(name = "Offer")
 public class Offer {
 
 	@Id
-	@Column(name = "OFFER_ID")
+	@Column(name = "OFFER_ID", nullable = false)
 	private Integer offerId;
 
-	@Column(name = "BRAND_ID")
+	@Column(name = "BRAND_ID", nullable = false)
 	private Integer brandId;
 
-	@Column(name = "START_DATE")
+	@Column(name = "START_DATE", nullable = false)
 	private Timestamp startDate;
 
-	@Column(name = "END_DATE")
+	@Column(name = "END_DATE", nullable = false)
 	private Timestamp endDate;
 
 	@Column(name = "PRICE_LIST")
 	private Integer priceListId;
 
-	@Column(name = "PARTNUMBER")
+	@Column(name = "PARTNUMBER", nullable = false)
 	private String productPartnumber;
 
 	@Column(name = "PRIORITY")
 	private Integer priority;
 
-	@Column(name = "PRICE")
+	@Column(name = "PRICE", nullable = false)
 	private BigDecimal price;
 
 	@Column(name = "CURR")

@@ -35,16 +35,14 @@ class OfferControllerIntegrationTest {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     private  HttpEntity<Object> entity;
+
+    private OfferDto offerTobeCreated;
     @BeforeEach
     void setUp() {
         headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         entity = new HttpEntity<>(null, headers);
-    }
-
-    @Test
-    void createOffer() throws JsonProcessingException {
-        var offerTobeCreated = OfferDto.builder()
+        offerTobeCreated = OfferDto.builder()
                 .offerId(1L)
                 .brandId(33)
                 .startDate("2024-06-25T00.00.00Z")
@@ -55,12 +53,41 @@ class OfferControllerIntegrationTest {
                 .price(new BigDecimal("155.0"))
                 .currencyIso("EUR")
                 .build();
+    }
+
+    @Test
+    void createOffer() throws JsonProcessingException {
         entity = new HttpEntity<>(objectMapper.writeValueAsString(offerTobeCreated), headers);
         ResponseEntity<OfferDto> response = restTemplate.exchange("http://localhost:"+port+"/offer", HttpMethod.POST,
                 entity,OfferDto.class);
         assertEquals(201, response.getStatusCodeValue(), "Status should be 201");
         assertNotNull(response.getBody());
         assertEquals(33, response.getBody().getBrandId() , "Brand Should be 33");
+    }
+
+    @Test
+    void createOfferReturnsErrorDuePartNumber() throws JsonProcessingException {
+        offerTobeCreated.setProductPartnumber("123");
+        entity = new HttpEntity<>(objectMapper.writeValueAsString(offerTobeCreated), headers);
+        ResponseEntity<OfferDto> response = restTemplate.exchange("http://localhost:"+port+"/offer", HttpMethod.POST,
+                entity,OfferDto.class);
+        assertEquals(404, response.getStatusCodeValue(), "Status should be 404");
+        assertNotNull(response.getBody());
+        assertNull(response.getBody().getBrandId() , "Brand Should be null");
+        offerTobeCreated.setProductPartnumber(null);
+        entity = new HttpEntity<>(objectMapper.writeValueAsString(offerTobeCreated), headers);
+        response = restTemplate.exchange("http://localhost:"+port+"/offer", HttpMethod.POST,
+                entity,OfferDto.class);
+        assertEquals(500, response.getStatusCodeValue(), "Status should be 500");
+    }
+    @Test
+    void createOfferReturnsErrorDueDates() throws JsonProcessingException {
+        offerTobeCreated.setStartDate("2024-08-17");
+        entity = new HttpEntity<>(objectMapper.writeValueAsString(offerTobeCreated), headers);
+        ResponseEntity<OfferDto> response = restTemplate.exchange("http://localhost:"+port+"/offer", HttpMethod.POST,
+                entity,OfferDto.class);
+        assertEquals(400, response.getStatusCodeValue(), "Status should be 400");
+        assertNotNull(response.getBody());
     }
 
     @Test
@@ -93,6 +120,14 @@ class OfferControllerIntegrationTest {
         assertNotNull(filteredOffers, "Should be not null");
         assertFalse(filteredOffers.isEmpty(), "should have data");
         assertEquals(5, filteredOffers.size(), "After filter applied there are 5 records");
+    }
+
+    @Test
+    void getNonExpireOffersWithError() {
+        ResponseEntity<OfferDto> response = restTemplate.exchange("http://localhost:"+port+"/offer?date=2024-08-01", HttpMethod.GET,
+                entity,new ParameterizedTypeReference<OfferDto>(){});
+        assertEquals(400, response.getStatusCodeValue(), "Status should be 400");
+        assertNotNull(response, "Should be not null");
     }
 
     @Test

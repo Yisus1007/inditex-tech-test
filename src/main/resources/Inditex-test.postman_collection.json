@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "914e7da2-dbc3-46fb-adc1-98eea266609c",
+		"name": "Inditex-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9296887"
+	},
+	"item": [
+		{
+			"name": "GetAllOffers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOffer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"offerId\": 4,\n    \"brandId\": 2,\n    \"startDate\": \"2024-08-01T00.00.00Z\",\n    \"endDate\": \"2024-08-10T23.59.59Z\",\n    \"priceListId\": 3,\n    \"productPartnumber\": \"0101005582\",\n    \"priority\": 2,\n    \"price\": 115.25,\n    \"currencyIso\": \"EUR\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllOffersExistent",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/offer?date=2024-08-01T00.00.00Z",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2024-08-01T00.00.00Z"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOfferById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/offer/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteOfferById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/offer/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteAllOffers",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/offer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"offer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
