@@ -1,7 +1,9 @@
 package com.inditex.hiring.domain.ports;
 
+import java.util.Optional;
+
 public interface DeleteOffer {
-    boolean deleteOffer(Integer id);
+    Optional<Boolean> deleteOffer(Integer id);
 
     void deleteAllOffers();
 

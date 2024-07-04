@@ -11,7 +11,7 @@ public interface OfferRepositoryPort {
     OfferDto save(OfferDto offerDto) throws ParseException;
     Optional<OfferDto> findById(Integer id);
     List<OfferDto> findAll();
-    List<OfferDto> findNonExpiredOffers();
+    List<OfferDto> findNonExpiredOffers(String date);
     boolean deleteById(Integer id);
     void deleteAll();
 }

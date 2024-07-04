@@ -5,6 +5,7 @@ import com.inditex.hiring.domain.ports.CreateOffer;
 import com.inditex.hiring.domain.ports.OfferRepositoryPort;
 
 import java.text.ParseException;
+import java.util.Optional;
 
 public class CreateOfferImpl implements CreateOffer {
     private final OfferRepositoryPort offerRepositoryPort;
@@ -14,7 +15,7 @@ public class CreateOfferImpl implements CreateOffer {
     }
 
     @Override
-    public OfferDto createOffer(OfferDto offerDto) throws ParseException {
-        return offerRepositoryPort.save(offerDto);
+    public Optional<OfferDto> createOffer(OfferDto offerDto) throws ParseException {
+        return Optional.of(offerRepositoryPort.save(offerDto));
     }
 }

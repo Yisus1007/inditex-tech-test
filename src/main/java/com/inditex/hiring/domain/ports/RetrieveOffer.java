@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface RetrieveOffer {
     Optional<OfferDto> getOfferById(Integer id);
 
-    List<OfferDto> getAllOffers();
+    Optional<List<OfferDto>> getAllOffers();
 
-    List<OfferDto> getNonExpireOffers();
+    Optional<List<OfferDto>> getNonExpireOffers(String date);
 
 
 }
