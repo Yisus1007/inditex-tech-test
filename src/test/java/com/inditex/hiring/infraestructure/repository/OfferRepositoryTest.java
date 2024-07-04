@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
@@ -67,6 +69,22 @@ public class OfferRepositoryTest {
        var offerSaved = offerRepository.save(offerEntity);
        var offerValidation = offerRepository.findById(offerSaved.getOfferId());
        assertEquals(10, offerValidation.map(Offer::getOfferId).orElse(null), "Offer id should be the inserted");
+    }
+
+    @Test
+    public void errorSavingNewDataDueDates() {
+        offerEntity.setStartDate(null);
+        offerEntity.setOfferId(125);
+        var offerSaved = assertThrows(Exception.class, () -> offerRepository.save(offerEntity));
+        assertTrue(offerSaved.getMessage().contains("not-null"), "Error related with not null at start_date field");
+    }
+
+    @Test
+    public void errorSavingNewDataDuePartNumber() {
+        offerEntity.setProductPartnumber(null);
+        offerEntity.setOfferId(126);
+        var offerSaved = assertThrows(Exception.class, () -> offerRepository.save(offerEntity));
+        assertTrue(offerSaved.getMessage().contains("not-null"), "Error related with not null at start_date field");
     }
 
     @Test

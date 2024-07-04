@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -119,5 +120,44 @@ public class OfferRepositoryAdapterTest {
         when(offerRepository.existsById(anyInt())).thenReturn(false);
         var deleted = offerRepositoryAdapter.deleteById(45);
         assertFalse(deleted, "should be false");
+    }
+
+    @Test
+    public void should_throw_an_exception_due_dates() {
+        var offerTobeSaved = OfferDto.builder()
+                .offerId(1L)
+                .brandId(33)
+                .startDate("2024-06-25")
+                .endDate("2024-07-25T23.59.59Z")
+                .priceListId(155L)
+                .productPartnumber("110250354")
+                .priority(0)
+                .price(new BigDecimal("155.0"))
+                .currencyIso("EUR")
+                .build();
+        var exception = assertThrows(Exception.class, () -> offerRepositoryAdapter.save(offerTobeSaved));
+        assertTrue(exception.getMessage().contains("parsed"));
+        offerTobeSaved.setStartDate("2024-07-25T23.59.59Z");
+        offerTobeSaved.setEndDate("2024-07-25");
+        exception = assertThrows(Exception.class, () -> offerRepositoryAdapter.save(offerTobeSaved));
+        assertTrue(exception.getMessage().contains("parsed"), "Should throw a parse related message");
+    }
+
+    @Test
+    public void should_throw_an_exception_due_index() {
+        var offerTobeSaved = OfferDto.builder()
+                .offerId(1L)
+                .brandId(33)
+                .startDate("2024-07-25T23.59.59Z")
+                .endDate("2024-07-25T23.59.59Z")
+                .priceListId(155L)
+                .productPartnumber("1102")
+                .priority(0)
+                .price(new BigDecimal("155.0"))
+                .currencyIso("EUR")
+                .build();
+        var exception = assertThrows(Exception.class, () -> offerRepositoryAdapter.save(offerTobeSaved));
+        System.out.println("exception: " + exception);
+        assertTrue(exception.getMessage().contains("begin"), "Should throw an index related message");
     }
 }

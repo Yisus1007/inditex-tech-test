@@ -4,7 +4,6 @@ import java.util.Optional;
 
 public interface DeleteOffer {
     Optional<Boolean> deleteOffer(Integer id);
-
     void deleteAllOffers();
 
 }

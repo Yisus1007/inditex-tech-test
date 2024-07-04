@@ -2,6 +2,7 @@ package com.inditex.hiring.domain.dto;
 
 import com.inditex.hiring.infraestructure.entity.Offer;
 import lombok.Builder;
+import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 
 
 @Builder
+@ToString
 public class OfferDto implements Serializable {
 
 	private static final long serialVersionUID = 448171649369562796L;
